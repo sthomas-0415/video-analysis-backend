@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Insight</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f9fafb; display: flex; justify-content: center; padding-top: 50px; }
+        .container { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 600px; }
+        h1 { margin-top: 0; font-size: 1.5rem; font-weight: bold; }
+        p { color: #666; font-size: 0.9rem; margin-bottom: 1.5rem; }
+        .row { display: flex; gap: 1rem; margin-bottom: 1rem; }
+        .col { flex: 1; }
+        label { display: block; font-size: 0.8rem; color: #555; margin-bottom: 0.3rem; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 5px; }
+        .color-wrapper { display: flex; align-items: center; gap: 0.5rem; }
+        input[type="color"] { border: none; width: 40px; height: 40px; cursor: pointer; }
+        .file-box { border: 1px solid #ccc; padding: 0.5rem; border-radius: 5px; margin-bottom: 1.5rem; background: #fff; }
+        .btn-black { background: black; color: white; padding: 0.7rem 1.2rem; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-white { background: white; color: black; padding: 0.7rem 1.2rem; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; margin-left: 0.5rem; }
+        .btn-black:disabled { background: #555; cursor: not-allowed; }
+        #result { margin-top: 20px; padding: 15px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 5px; white-space: pre-wrap; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>AI Insight</h1>
+    <p>Analyze the first half of a game video for stats, strengths, weaknesses, and improvement ideas.</p>
+
+    <form id="analysisForm">
+        <div class="row">
+            <div class="col">
+                <label>Team Name</label>
+                <input type="text" name="team_name" placeholder="River City Raptors" required>
+            </div>
+            <div class="col">
+                <label>Team Color</label>
+                <div class="color-wrapper">
+                    <input type="color" value="#0ea5e9">
+                    <input type="text" value="#0ea5e9">
+                </div>
+            </div>
+            <div class="col">
+                <label>Player Number</label>
+                <input type="number" name="player_number" placeholder="5" required>
+            </div>
+        </div>
+
+        <label>Game Video</label>
+        <div class="file-box">
+            <input type="file" name="file" accept="video/*" required>
+        </div>
+
+        <button type="submit" class="btn-black">Analyze First Half</button>
+        <button type="reset" class="btn-white">Reset</button>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    const form = document.getElementById('analysisForm');
+    const resultDiv = document.getElementById('result');
+    const submitBtn = document.querySelector('.btn-black');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // 1. UI Updates
+        submitBtn.textContent = "Analyzing... (Wait 30s)";
+        submitBtn.disabled = true;
+        resultDiv.style.display = 'none';
+
+        // 2. Prepare Data
+        const formData = new FormData(form);
+
+        try {
+            // ============================================================
+            // PASTE YOUR RENDER URL BELOW (Keep the quotes!)
+            // Example: const url = "https://my-app.onrender.com/analyze";
+            // ============================================================
+            const url = "PASTE_YOUR_RENDER_URL_HERE/analyze"; 
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) throw new Error("Server Error");
+
+            const data = await response.json();
+            
+            // 3. Show Result
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = data.analysis;
+
+        } catch (error) {
+            alert("Error: " + error.message + "\nDid you paste the Render URL correctly?");
+        } finally {
+            submitBtn.textContent = "Analyze First Half";
+            submitBtn.disabled = false;
+        }
+    });
+</script>
+
+</body>
+</html>
