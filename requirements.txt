@@ -1,9 +1,9 @@
-fastapi
-uvicorn
-python-multipart
-openai
-python-dotenv
-opencv-python-headless
+fastapi==0.104.1
+uvicorn==0.24.0
+openai==1.3.5
+opencv-python-headless==4.8.1
+python-multipart==0.0.6
+
 
 
 
