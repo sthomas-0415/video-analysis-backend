@@ -60,7 +60,7 @@ async def analyze_video(
 
         # Step D: Generate Analysis
         print("Generating analysis...")
-        model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+        model = genai.GenerativeModel(model_name="gemini-1.5-flash-001")
         
         prompt = (
             f"You are a sports analyst. Analyze the first half of this video for the team '{team_name}'. "
@@ -82,4 +82,5 @@ async def analyze_video(
     finally:
         if os.path.exists(temp_filename):
             os.remove(temp_filename)
+
 
