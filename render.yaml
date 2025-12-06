@@ -1,7 +1,7 @@
 yaml
 services:
   - type: web
-    name: video-analyzer
+    name: video-analysis-backend
     runtime: python
     pythonVersion: 3.11.8
     buildCommand: |
