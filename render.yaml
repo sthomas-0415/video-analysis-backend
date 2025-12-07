@@ -1,4 +1,3 @@
-yaml
 services:
   - type: web
     name: video-analysis-backend
