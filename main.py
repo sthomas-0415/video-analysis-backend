@@ -46,7 +46,7 @@ async def analyze_video(file: UploadFile = File(...)):
         cap = cv2.VideoCapture(tmp_path)
         
         frame_count = 0
-        max_frames = 20
+        max_frames = 100
         success = True
         
         while success and len(frames_base64) < max_frames:
@@ -119,6 +119,7 @@ async def health_check():
 @app.get("/test")
 async def test():
     return {"test": "ok", "opencv_version": cv2.__version__}
+
 
 
 
